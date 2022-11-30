@@ -4,10 +4,11 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import morgan from 'morgan';
 import ApiError from './utils/ApiError'
+import routerAccount from './routes/acount.router'
+// import router from '../src/routes/order.router'
 import orderRouter from './routes/order.router'
 import httpStatus from 'http-status';
 const app = express()
-
 //parse json request body
 app.use(express.json())
 
@@ -21,6 +22,9 @@ app.options('*', cors());
 app.use('/api', orderRouter);
 
 // parse urlencoded request body
+app.use(express.urlencoded({ extended: true }));
+app.use('/api',routerAccount)
+// app.use('/api', router);
 app.use(express.urlencoded({
   extended: true
 }));
@@ -32,6 +36,7 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 })
 
+//use routers
 
 
 //conect db 
