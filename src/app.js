@@ -4,8 +4,9 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import morgan from 'morgan';
 import ApiError from './utils/ApiError'
+import routerAccount from './routes/acount.router'
+// import router from '../src/routes/order.router'
 const app = express()
-
 //parse json request body
 app.use(express.json())
 
@@ -17,15 +18,14 @@ app.options('*', cors());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/api',routerAccount)
+// app.use('/api', router);
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 })
 
 //use routers
-// app.use('/api', routes);
-
 //conect db 
 try {
   // connect db atlas ket noi db atlas
